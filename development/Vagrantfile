@@ -1,0 +1,29 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.define :centos5_core423 do |centos5_core423|
+    centos5_core423.vm.box = "opscode-centos-5.9"
+    centos5_core423.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-5.9_provisionerless.box"
+  end
+  
+  config.vm.define :centos6_core423 do |centos6_core423|
+    centos6_core423.vm.box = "opscode-centos-6.4"
+    centos6_core423.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box"
+  end
+  
+  config.vm.network :forwarded_port, guest: 8080, host: 8080
+  config.vm.provision :shell, :path => "provision.sh"
+  config.vm.provision :chef_solo do |chef|
+    chef.cookbooks_path = "../cookbooks"
+    chef.add_recipe "zenVagrant::development"
+  end
+
+  config.vm.network :forwarded_port, guest: 8080, host: 8080
+  config.vm.provider :virtualbox do |vb|
+    # Don't boot with headless mode
+    vb.gui = true
+    #   # Use VBoxManage to customize the VM. For example to change memory:
+    vb.customize ["modifyvm", :id, "--memory", "3072"]
+  end
+end
