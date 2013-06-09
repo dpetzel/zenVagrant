@@ -40,9 +40,3 @@ file "/opt/zenoss/etc/DAEMONS_TXT_ONLY" do
   action :create
   notifies :restart, "service[zenoss]"
 end
-
-cookbook_file "/opt/zenoss/etc/dev_daemons_screen.conf" do
-  source "dev_daemons_screen.conf"
-  mode "0644"
-  owner "zenoss"
-end
