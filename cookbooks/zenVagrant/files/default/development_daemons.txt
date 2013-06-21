@@ -1,1 +1,5 @@
 zeneventserver
+zopectl
+zeneventd
+zenhub
+zenjobs
