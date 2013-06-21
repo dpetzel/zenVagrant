@@ -11,17 +11,18 @@ package "wget"
 
 
 remote_file "/tmp/core-autodeploy.sh" do
-  source "https://raw.github.com/dpetzel/core-autodeploy/4.2.3/core-autodeploy.sh"
+  source "https://raw.github.com/zenoss/core-autodeploy/4.2.3/core-autodeploy.sh"
   mode "0755"
 end
 
 remote_file "/tmp/secure_zenoss.sh" do
-  source "https://raw.github.com/dpetzel/core-autodeploy/4.2.3/secure_zenoss.sh"
+  source "https://raw.github.com/zenoss/core-autodeploy/4.2.3/core-autodeploy.sh"
 end
 
 execute "install_zenoss" do
   command "./core-autodeploy.sh"
   cwd "/tmp"
+  timeout 3600
   not_if { ::File.exists?("/opt/zenoss") }
   notifies :start, "service[zenoss]", :immediately
 end

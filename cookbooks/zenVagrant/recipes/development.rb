@@ -10,20 +10,7 @@
 
 # Lets get setup to look like http://wiki.zenoss.org/ZenPack_Development_Guide/Development_Environment#Running_a_Minimal_Zenoss
 
-# Avoid installing any Zenpacks
-file "/tmp/zenpack_actions.txt" do
-  #It will be created as an empty file
-  action :create
-  mode "0644"
-  content ""
-end
-
 include_recipe "#{cookbook_name}"
-
-# We'll start the daemons we want
-service "zenoss" do
-  action :stop
-end
 
 package "screen"
 
